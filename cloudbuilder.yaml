@@ -1,3 +1,0 @@
-steps:
-- name: 'debian'
-  args: ['echo','hello world']
