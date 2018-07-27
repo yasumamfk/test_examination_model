@@ -98,7 +98,11 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
+/sitesteps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['bash','deploy.sh']
+  dir: 'bin'
+
 
 # mypy
 .mypy_cache/
