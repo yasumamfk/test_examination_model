@@ -1,0 +1,37 @@
+defaults: &defaults
+  working_directory: /src/github.com/mfkessai/cf
+  docker:
+    - image: asia.gcr.io/mfk-shared/ci-toolkit:master
+      auth:
+        username: _json_key
+        password: $MFK_SHARED_GCR_AUTH
+      environment:
+        CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+        TZ: Asia/Tokyo
+
+gcloud-setup: &gcloud-setup
+  run:
+    name: Set service account for gcloud
+    command: |
+      $CI_TOOLKIT/gcloud/setup.sh
+version: 2
+jobs:
+  deploy-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo "export PROJECT_NAME=mfk-dev" >> $BASH_ENV
+      - run: echo "export ACCT_AUTH=${MFK_DEV_CF_ACCT_AUTH}" >> $BASH_ENV
+      - <<: *gcloud-setup
+      - run:
+          name: deploy on cloud builder on mfk-dev
+          command: |
+            gcloud container builds submit --config cloudbuild.yaml
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy-prod:
+          filters:
+            branches:
+              only: review
