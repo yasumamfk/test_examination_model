@@ -97,17 +97,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/sitesteps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['bash','deploy.sh']
-  dir: 'bin'
-
 
 # mypy
 .mypy_cache/
-
-census_data
-data
-main
-utls
