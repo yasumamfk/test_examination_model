@@ -1,0 +1,21 @@
+defaults: &defaults
+  working_directory: /src/github.com/mfkessai/examination_model
+  docker:
+    - image: google/cloud-sdk
+      environment:
+        CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+        TZ: Asia/Tokyo
+  merge-preview:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: check cloudbuild.yaml syntax
+          command: |
+            echo
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - merge-preview
