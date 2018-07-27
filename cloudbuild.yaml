@@ -1,6 +1,49 @@
 steps:
+<<<<<<< HEAD
 - name: 'debian'
   args: ['echo','hello world!']
 
 - name: 'debian'
   args: ['echo','====================']
+=======
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'push_tag'
+  args:
+  - '-c'
+  - |
+    pip install requests
+    echo v`date +"%Y%m%d_%H%M%S"` > tag
+    tag=`cat tag`
+    python bin/push_tag.py ${tag} $_GITHUB_API_TOKEN
+
+
+- name: gcr.io/cloud-builders/gsutil
+  entrypoint: 'bash'
+  id: 'put_model'
+  args:
+  - '-c'
+  - |
+    tag=`cat tag`
+    Source=gs://$PROJECT_ID-data-forward-test/$REPO_NAME/${tag}
+    gsutil cp ./$_MODEL_OBJ ${Source}/$_MODEL_OBJ
+
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'deploy_model'
+  args:
+  - '-c'
+  - |
+    tag=`cat tag`
+    Source=gs://$PROJECT_ID-data-forward-test/$REPO_NAME/${tag}
+    gcloud beta ml-engine versions create ${tag} \
+      --model $_MODEL_NAME \
+      --origin ${Source} \
+      --runtime-version 1.8 \
+      --framework SCIKIT_LEARN \
+      --python-version 3.5
+
+substitutions:
+    _MODEL_OBJ: model.pkl
+    _MODEL_NAME: examination
+>>>>>>> 1e917eb... init

@@ -97,6 +97,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
+<<<<<<< HEAD
 # mkdocs documentation
 /sitesteps:
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -111,3 +112,8 @@ census_data
 data
 main
 utls
+=======
+
+# mypy
+.mypy_cache/
+>>>>>>> 1e917eb... init

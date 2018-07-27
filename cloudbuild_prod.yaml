@@ -1,0 +1,14 @@
+steps:
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'set_default'
+  args:
+  - '-c'
+  - |
+    git fetch --depth=1
+    TagVer=`git describe --tags`
+    gcloud ml-engine versions set-default ${TagVer} --model=$_MODEL_NAME
+
+
+substitutions:
+    _MODEL_NAME: examination
