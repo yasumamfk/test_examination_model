@@ -98,6 +98,7 @@ venv.bak/
 .ropeproject
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # mkdocs documentation
 /sitesteps:
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -117,3 +118,8 @@ utls
 # mypy
 .mypy_cache/
 >>>>>>> 1e917eb... init
+=======
+
+# mypy
+.mypy_cache/
+>>>>>>> de24125... init

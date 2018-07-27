@@ -1,11 +1,4 @@
 steps:
-<<<<<<< HEAD
-- name: 'debian'
-  args: ['echo','hello world!']
-
-- name: 'debian'
-  args: ['echo','====================']
-=======
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
   id: 'push_tag'
@@ -46,4 +39,3 @@ steps:
 substitutions:
     _MODEL_OBJ: model.pkl
     _MODEL_NAME: examination
->>>>>>> 1e917eb... init
