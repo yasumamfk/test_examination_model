@@ -1,15 +1,8 @@
 steps:
-- name: 'debian'
+- name: gcr.io/cloud-builders/gsutil
+  entrypoint: 'bash'
+  id: 'cache_dep_upload'
   args:
-  - echo
-  - ${PROJECT_ID}
-  - $PROJECT_ID
-
-substitutions:
-    _NODE_VERSION_1: v6.9.5 # default value
-    DEPLOYMENT_SOURCE: gs://mfk-dev-data-forward-test/test_model/
-    MODEL_NAME: test_takemura
-    FRAMEWORK: SCIKIT_LEARN
-    RUNTIME: 1.8
-    PYTHONVER: 3.5
-    MODEL_OBJ: model.pkl
+  - '-c'
+  - |
+    echo ${PROJECT_ID}
