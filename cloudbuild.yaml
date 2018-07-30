@@ -6,3 +6,7 @@ steps:
   - '-c'
   - |
     echo ${PROJECT_ID}
+    echo ${_SUB_VALUE}
+    echo ${COMMIT_SHA}
+substitutions:
+    _SUB_VALUE: world
