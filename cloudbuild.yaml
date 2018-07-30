@@ -9,7 +9,17 @@ steps:
     echo ${COMMIT_SHA}
     ls /workspace/bin
     echo gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_OBJ
-    gsutil cp ./$_MODEL_OBJ gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_NAME
+    gsutil cp ./$_MODEL_OBJ gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_OBJ
+
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'increment_ver'
+  args:
+  - '-c'
+  - |
+    ver=`gcloud ml-engine versions list --model=$_MODEL_NAME --limit=1 --sort-by=~ | grep 'v'| sed -e "s/[^0-9]//g"`
+    VERSION_NAME=v$((${ver} + 1))
+    echo $VERSION_NAME
 
 substitutions:
     _MODEL_OBJ: model.pkl
