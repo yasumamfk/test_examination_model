@@ -8,11 +8,12 @@ steps:
     echo ${PROJECT_ID}
     echo ${COMMIT_SHA}
     ls /workspace
-    gsutil cp ./${MODEL_OBJ} gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME/${COMMIT_SHA}/${MODEL_OBJ}
+    gsutil cp ./${MODEL_OBJ} gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME}/${MODEL_NAME}/{COMMIT_SHA}/${MODEL_OBJ}
+  env:
+  - |
+    MODEL_OBJ=model.pkl
+
 substitutions:
     BUCKET: data-forward-test
     MODEL_NAME: test_takemura
     FRAMEWORK: SCIKIT_LEARN
-    RUNTIME: "1.8"
-    PYTHONVER: "3.5"
-    MODEL_OBJ: "model.pkl"
