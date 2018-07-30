@@ -13,16 +13,17 @@ steps:
 
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  id: 'increment_ver'
+  id: 'deploy_model'
   args:
   - '-c'
   - |
     ver=`gcloud ml-engine versions list --model=$_MODEL_NAME --limit=1 --sort-by=~ | grep 'v'| sed -e "s/[^0-9]//g"`
-    VERSION_NAME=v$((${ver} + 1))
-    echo $VERSION_NAME
+    _VERSION_NAME=`v$((${ver} + 1))`
+    gcloud ml-engine versions set-default $_VERSION_NAME --model=$_MODEL_NAME
 
 substitutions:
     _MODEL_OBJ: model.pkl
     _BUCKET: data-forward-test
     _MODEL_NAME: test_takemura
     _FRAMEWORK: SCIKIT_LEARN
+    _VERSION_NAME:
