@@ -8,7 +8,7 @@ steps:
     echo ${PROJECT_ID}
     echo ${COMMIT_SHA}
     ls /workspace
-    echo gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME}/${MODEL_NAME}/{COMMIT_SHA}/${MODEL_OBJ}
+    echo gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME}/${_MODEL_NAME}/{COMMIT_SHA}/${MODEL_OBJ}
     gsutil cp ./${MODEL_OBJ} gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME}/${MODEL_NAME}/{COMMIT_SHA}/${MODEL_OBJ}
   env:
   - |
@@ -16,5 +16,5 @@ steps:
     BUCKET=data-forward-test
 
 substitutions:
-    MODEL_NAME: test_takemura
-    FRAMEWORK: SCIKIT_LEARN
+    _MODEL_NAME: test_takemura
+    _FRAMEWORK: SCIKIT_LEARN
