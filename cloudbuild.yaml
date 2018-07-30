@@ -1,20 +1,25 @@
 steps:
-- name: 'debian'
-  entrypoint: 'bash'
-  id: 'test'
-  args:
-  - '-c'
-  - |
-    echo ${PROJECT_ID}
-    echo $PROJECT_ID
-    echo ${REPO_NAME}
-    echo ${BRANCH_NAME}
-    echo ${REVISION_ID}
-    echo ${COMMIT_SHA}
-    echo ${SHORT_SHA}
-    echo ${DEPLOYMENT_SOURCE}
-    echo ${MODEL_OBJ}
+#- name: 'debian'
+#  entrypoint: 'bash'
+#  id: 'test'
+#  args:
+#  - '-c'
+#  - |
+#    echo ${PROJECT_ID}
+#    echo $PROJECT_ID
+#    echo ${REPO_NAME}
+#    echo ${BRANCH_NAME}
+#    echo ${REVISION_ID}
+#    echo ${COMMIT_SHA}
+#    echo ${SHORT_SHA}
+#    echo ${DEPLOYMENT_SOURCE}
+#    echo ${MODEL_OBJ}
 
+- name: 'debian'
+  args:
+  - echo
+  - ${PROJECT_ID}
+  - $PROJECT_ID
 
 #- name: gcr.io/cloud-builders/gsutil
 #  entrypoint: 'bash'
