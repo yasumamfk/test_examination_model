@@ -1,4 +1,61 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['bash','deploy.sh']
-  dir: 'bin'
+- name: 'debian'
+  entrypoint: 'bash'
+  id: 'test'
+  args:
+  - '-c'
+  - |
+    echo ${PROJECT_ID}
+    echo $PROJECT_ID
+    echo ${REPO_NAME}
+    echo ${BRANCH_NAME}
+    echo ${REVISION_ID}
+    echo ${COMMIT_SHA}
+    echo ${SHORT_SHA}
+    echo ${DEPLOYMENT_SOURCE}
+    echo ${MODEL_OBJ}
+
+
+#- name: gcr.io/cloud-builders/gsutil
+#  entrypoint: 'bash'
+#  id: 'save_model'
+#  args:
+#  - '-c'
+#  - |
+#    gsutil cp ./${MODEL_OBJ} gs://${DEPLOYMENT_SOURCE}/${PR_NUMBER}/${MODEL_OBJ}
+#
+#
+#- name: gcr.io/cloud-builders/gcloud
+#  entrypoint: 'bash'
+#  id: 'increment_ver'
+#  args:
+#  - '-c'
+#  - |
+#    ver=`gcloud ml-engine versions list --model=${MODEL_NAME} --limit=1 --sort-by=~ | grep 'v'| sed -e "s/[^0-9]//g"`
+#    VERSION_NAME=v$((${ver} + 1))
+#    echo ${VERSION_NAME}
+#
+#
+#- name: gcr.io/cloud-builders/gcloud
+#  entrypoint: 'bash'
+#  id: 'deploy_model'
+#  args:
+#  - '-c'
+#  - |
+#    gcloud beta ml-engine versions create ${VERSION_NAME} \
+#        --model ${MODEL_NAME} \
+#        --origin ${DEPLOYMENT_SOURCE} \
+#        --runtime-version=${RUNTIME} \
+#        --framework ${FRAMEWORK} \
+#        --python-version=${PYTHONVER}
+
+
+
+substitutions:
+    _NODE_VERSION_1: v6.9.5 # default value
+    DEPLOYMENT_SOURCE: gs://mfk-dev-data-forward-test/test_model/
+    MODEL_NAME: test_takemura
+    FRAMEWORK: SCIKIT_LEARN
+    RUNTIME: 1.8
+    PYTHONVER: 3.5
+    MODEL_OBJ: model.pkl
