@@ -15,7 +15,7 @@ steps:
   args:
   - '-c'
   - |
-    gcloud beta ml-engine versions create $COMMIT_SHA \
+    gcloud beta ml-engine versions create v4 \
       --model $_MODEL_NAME \
       --origin gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_OBJ \
       --runtime-version=$_RUNTIME \
