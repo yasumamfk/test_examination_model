@@ -16,10 +16,20 @@ steps:
   - '-c'
   - |
     ver=`gcloud ml-engine versions list --model=$_MODEL_NAME --limit=1 --sort-by=~ | grep 'v'| sed -e "s/[^0-9]//g"`
-    echo $ver
-
+    _VERSION_NAME=`v$((${ver} + 1))`
+    echo $_VERSION_NAME
+    gcloud beta ml-engine versions create $_VERSION_NAME \
+      --model $_MODEL_NAME \
+      --origin gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_OBJ \
+      --runtime-version=$_RUNTIME \
+      --framework $_FRAMEWORK \
+      --python-version=$_PYTHONVER
 
 substitutions:
     _MODEL_OBJ: model.pkl
     _BUCKET: data-forward-test
-    _MODEL_NAME: test_model
+    _MODEL_NAME: test_takemura
+    _FRAMEWORK: SCIKIT_LEARN
+    _VERSION_NAME:
+    _RUNTIME: '1.8'
+    _PYTHONVER: '3.5'
