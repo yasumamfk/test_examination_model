@@ -1,0 +1,13 @@
+steps:
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'set_default'
+  args:
+  - '-c'
+  - |
+    gcloud ml-engine versions set-default $_VERSION_NAME --model=$_MODEL_NAME
+
+substitutions:
+    _VERSION_NAME: v4
+    _MODEL_NAME: test_takemura
+
