@@ -9,7 +9,7 @@ steps:
     echo ${COMMIT_SHA}
     ls /workspace
     echo gs://${PROJECT_ID}-{_BUCKET}/${REPO_NAME}/${_MODEL_NAME}/{COMMIT_SHA}/${_MODEL_OBJ}
-    gsutil cp ./${_MODEL_OBJ} gs://${PROJECT_ID}-{_BUCKET}/${REPO_NAME}/${MODEL_NAME}/{COMMIT_SHA}/${_MODEL_NAME}
+    gsutil cp ./${_MODEL_OBJ} gs://${PROJECT_ID}-{_BUCKET}/${REPO_NAME}/${_MODEL_NAME}/{COMMIT_SHA}/${_MODEL_NAME}
 
 substitutions:
     _MODEL_OBJ: model.pkl
