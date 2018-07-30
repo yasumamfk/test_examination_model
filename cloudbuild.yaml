@@ -1,17 +1,10 @@
 steps:
-- name: gcr.io/cloud-builders/gsutil
-  entrypoint: 'bash'
-  id: 'cache_dep_upload'
+- name: gcr.io/cloud-builders/debian
   args:
-  - '-c'
-  - |
-    echo ${PROJECT_ID}
-    echo ${COMMIT_SHA}
-    ls /workspace
-    echo gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME}/${_MODEL_NAME}/{COMMIT_SHA}/${MODEL_OBJ}
-    gsutil cp ./${MODEL_OBJ} gs://${PROJECT_ID}-{BUCKET}/${REPO_NAME}/${MODEL_NAME}/{COMMIT_SHA}/${_MODEL_NAME}
-
-  env: ['MODEL_OBJ=model.pkl','BUCKET=data-forward-test']
+  - echo $MODEL_OBJ; echo $_MODEL_NAME
+  env:
+  - 'MODEL_OBJ=model.pkl'
+  - 'BUCKET=data-forward-test'
 
 substitutions:
     _MODEL_NAME: test_takemura
