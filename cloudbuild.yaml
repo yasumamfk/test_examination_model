@@ -13,6 +13,6 @@ substitutions:
     BUCKET: data-forward-test
     MODEL_NAME: test_takemura
     FRAMEWORK: SCIKIT_LEARN
-    RUNTIME: 1.8
-    PYTHONVER: 3.5
-    MODEL_OBJ: model.pkl
+    RUNTIME: "1.8"
+    PYTHONVER: "3.5"
+    MODEL_OBJ: "model.pkl"
