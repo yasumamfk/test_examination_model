@@ -1,13 +1,12 @@
 steps:
 - name: gcr.io/cloud-builders/gsutil
   entrypoint: 'bash'
-  id: 'cache_dep_upload'
+  id: 'put_model'
   args:
   - '-c'
   - |
     ls /workspace/bin
-    echo gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_OBJ
-    gsutil cp ./$_MODEL_OBJ gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA/$_MODEL_OBJ
+    gsutil cp ./$_MODEL_OBJ $_SOURCE/$_MODEL_OBJ
 
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
@@ -15,17 +14,65 @@ steps:
   args:
   - '-c'
   - |
-    gcloud beta ml-engine versions create v4 \
+    gcloud beta ml-engine versions create $_MODEL_VER \
       --model $_MODEL_NAME \
-      --origin gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/$_MODEL_NAME/$COMMIT_SHA \
-      --runtime-version=$_RUNTIME \
+      --origin $_SOURCE \
+      --runtime-version $_RUNTIME \
       --framework $_FRAMEWORK \
-      --python-version=$_PYTHONVER
+      --python-version $_PYTHONVER
+
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bq'
+  id: 'read_training_data'
+  args:
+  - '-c'
+  - |
+    TargetModel=`cat  /workspace/.target.model`
+    echo ${TargetModel}
+    python run.py --project 'mfk-dev' > /root/data/test_data.json
+  volumes:
+  - name: 'data'
+    path: /root/data
+  waitFor: ['deploy_model']
+
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'check_new_version_score'
+  args:
+  - '-c'
+  - |
+    Input=/root/data/test_data.json
+    gcloud beta ml-engine predict \
+      --model $_MODEL_NAME \
+      --version $_MODEL_VER \
+      --json-instances ${Input}
+  volumes:
+  - name: 'data'
+    path: /root/data
+  waitFor: ['read_training_data']
+
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'check_current_score'
+  args:
+  - '-c'
+  - |
+    Input=/root/data/test_data.json
+    gcloud beta ml-engine predict \
+      --model $_MODEL_NAME \
+      --version $_MODEL_VER \
+      --json-instances ${Input}
+  volumes:
+  - name: 'data'
+    path: /root/data
+  waitFor: ['read_training_data']
+
 
 substitutions:
     _MODEL_OBJ: model.pkl
-    _BUCKET: data-forward-test
     _MODEL_NAME: test_takemura
+    _MODEL_VER: $TAG_NAME
+    _SOURCE: gs://$PROJECT_ID-data-forward-test/$REPO_NAME/$_MODEL_VER
     _FRAMEWORK: SCIKIT_LEARN
     _RUNTIME: '1.8'
     _PYTHONVER: '3.5'
