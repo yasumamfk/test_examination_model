@@ -17,7 +17,6 @@ argc = len(argvs)
 user = 'mfkessai'
 repo = 'examination_model'
 branch = 'preview'
-host = 'api.github.com'
 token = argvs[2]
 
 headers = {
@@ -30,7 +29,7 @@ headers = {
 # create new release
 def create_release(tag_version):
     print('create_release and tag')
-    path = 'https://' + host + '/repos/%s/%s/releases' % (user, repo)
+    path = 'https://api.github.com/repos/%s/%s/releases' % (user, repo)
     params = {
         'tag_name': '%s' % tag_version,
         'target_commitish': branch,
