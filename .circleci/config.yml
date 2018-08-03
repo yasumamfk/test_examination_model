@@ -1,4 +1,5 @@
 defaults: &defaults
+<<<<<<< HEAD
   working_directory: /src/github.com/mfkessai/cf
   docker:
     - image: asia.gcr.io/mfk-shared/ci-toolkit:master
@@ -27,11 +28,32 @@ jobs:
           name: deploy on cloud builder on mfk-dev
           command: |
             gcloud container builds submit --config cloudbuild.yaml
+=======
+  working_directory: /src/github.com/mfkessai/examination_model
+  docker:
+    - image: google/cloud-sdk
+      environment:
+        CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
+        TZ: Asia/Tokyo
+  merge-preview:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: check cloudbuild.yaml syntax
+          command: |
+            echo
+
+>>>>>>> preview
 workflows:
   version: 2
   deploy:
     jobs:
+<<<<<<< HEAD
       - deploy-prod:
           filters:
             branches:
               only: review
+=======
+      - merge-preview
+>>>>>>> preview

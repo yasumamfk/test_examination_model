@@ -5,9 +5,8 @@ steps:
   args:
   - '-c'
   - |
-    gcloud ml-engine versions set-default $_VERSION_NAME --model=$_MODEL_NAME
-
+    git fetch --depth=1
+    tag=`git describe --tags`
+    gcloud ml-engine versions set-default ${tag} --model=$_MODEL_NAME
 substitutions:
-    _VERSION_NAME: v4
-    _MODEL_NAME: test_takemura
-
+    _MODEL_NAME: examination

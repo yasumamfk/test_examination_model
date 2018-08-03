@@ -1,12 +1,25 @@
 steps:
+- name: gcr.io/cloud-builders/gcloud
+  entrypoint: 'bash'
+  id: 'push_tag'
+  args:
+  - '-c'
+  - |
+    pip install requests
+    echo v`date +"%Y%m%d_%H%M%S"` > tag
+    tag=`cat tag`
+    python bin/push_tag.py ${tag} $_GITHUB_API_TOKEN
+
+
 - name: gcr.io/cloud-builders/gsutil
   entrypoint: 'bash'
   id: 'put_model'
   args:
   - '-c'
   - |
-    ls /workspace/bin
-    gsutil cp ./$_MODEL_OBJ $_SOURCE/$_MODEL_OBJ
+    tag=`cat tag`
+    Source=gs://$PROJECT_ID-data-forward-test/$REPO_NAME/${tag}
+    gsutil cp ./$_MODEL_OBJ ${Source}/$_MODEL_OBJ
 
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
@@ -14,65 +27,15 @@ steps:
   args:
   - '-c'
   - |
-    gcloud beta ml-engine versions create $_MODEL_VER \
+    tag=`cat tag`
+    Source=gs://$PROJECT_ID-data-forward-test/$REPO_NAME/${tag}
+    gcloud beta ml-engine versions create ${tag} \
       --model $_MODEL_NAME \
-      --origin $_SOURCE \
-      --runtime-version $_RUNTIME \
-      --framework $_FRAMEWORK \
-      --python-version $_PYTHONVER
-
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bq'
-  id: 'read_training_data'
-  args:
-  - '-c'
-  - |
-    TargetModel=`cat  /workspace/.target.model`
-    echo ${TargetModel}
-    python run.py --project 'mfk-dev' > /root/data/test_data.json
-  volumes:
-  - name: 'data'
-    path: /root/data
-  waitFor: ['deploy_model']
-
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bash'
-  id: 'check_new_version_score'
-  args:
-  - '-c'
-  - |
-    Input=/root/data/test_data.json
-    gcloud beta ml-engine predict \
-      --model $_MODEL_NAME \
-      --version $_MODEL_VER \
-      --json-instances ${Input}
-  volumes:
-  - name: 'data'
-    path: /root/data
-  waitFor: ['read_training_data']
-
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bash'
-  id: 'check_current_score'
-  args:
-  - '-c'
-  - |
-    Input=/root/data/test_data.json
-    gcloud beta ml-engine predict \
-      --model $_MODEL_NAME \
-      --version $_MODEL_VER \
-      --json-instances ${Input}
-  volumes:
-  - name: 'data'
-    path: /root/data
-  waitFor: ['read_training_data']
-
+      --origin ${Source} \
+      --runtime-version 1.8 \
+      --framework SCIKIT_LEARN \
+      --python-version 3.5
 
 substitutions:
     _MODEL_OBJ: model.pkl
-    _MODEL_NAME: test_takemura
-    _MODEL_VER: $TAG_NAME
-    _SOURCE: gs://$PROJECT_ID-data-forward-test/$REPO_NAME/$_MODEL_VER
-    _FRAMEWORK: SCIKIT_LEARN
-    _RUNTIME: '1.8'
-    _PYTHONVER: '3.5'
+    _MODEL_NAME: examination
