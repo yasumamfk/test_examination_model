@@ -14,9 +14,9 @@ argvs = sys.argv
 argc = len(argvs)
 
 #mfkessai
-user = 'mfkessai'
-repo = 'examination_model'
-branch = 'preview'
+user = 'yasumamfk'
+repo = 'test_examination_model'
+branch = 'test'
 token = argvs[2]
 
 headers = {
