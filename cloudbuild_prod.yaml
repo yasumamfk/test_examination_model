@@ -5,7 +5,10 @@ steps:
   args:
   - '-c'
   - |
-    tag=`git fetch --depth=1 > tag | cat tag | tail -n 1`
+    git fetch --depth=1
+    tag=`git tag --awlays | tail -n 1`
+    echo ================
+    cat tag
     echo $tag
     gcloud ml-engine versions set-default ${tag} --model=$_MODEL_NAME --project mfk-dev
 substitutions:
