@@ -2,9 +2,6 @@
 
 
 # Directory structure
- Case when you build model on ML-Engine
-  - main/main.py is required
-  
  Case when you build model on local
    - model.pkl is required
    
