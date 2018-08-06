@@ -8,7 +8,4 @@ steps:
     git fetch --depth=1
     git describe --tags --always > tag
     tag=`cat tag`
-    gcloud ml-engine versions set-default ${tag} --model=$_MODEL_NAME
-
-substitutions:
-    _MODEL_NAME: examination
+    gcloud ml-engine versions set-default ${tag} --model=examination

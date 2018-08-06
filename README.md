@@ -9,11 +9,11 @@
    - model.pkl is required
    
 # Training data location
-always on BQ
+Always on BQ
  
 # When this application get deployed on ML-Engine
 |    |    |
 | ---- | ---- |
 |  When  |   get tagged  |
-|  Tag pattern  |  `^v\d\.\d\.\d$`  |
-|  Example  |  v1.0.0s |
+|  Tag pattern  |  `^v\d\d\d$`  |
+|  Example  |  v001 |
