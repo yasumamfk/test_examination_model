@@ -33,7 +33,7 @@ def create_release(tag_version):
     params = {
         'tag_name': '%s' % tag_version,
         'target_commitish': branch,
-        'name': 'v%s' % tag_version,
+        'name': '%s' % tag_version,
         'prerelease': False
     }
     resp = requests.post(path, data=json.dumps(params), headers=headers)

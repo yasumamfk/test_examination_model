@@ -8,9 +8,6 @@
 # Training data location
 Always on BQ
  
-# When this application get deployed on ML-Engine
-|    |    |
-| ---- | ---- |
-|  When  |   get tagged  |
-|  Tag pattern  |  `^v\d\d\d$`  |
-|  Example  |  v001 |
+# When gets deployed on ML-Engine
+After getting tagged 
+Getting tagged on Cloud Build automatically
