@@ -6,6 +6,7 @@ steps:
   - '-c'
   - |
     pip install requests
-    echo v`env TZ="Asia/Tokyo" date +"%Y%m%d_%H%M%S"` > tag
+    export TZ="Asia/Tokyo"
+    echo v`date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
     echo $tag
