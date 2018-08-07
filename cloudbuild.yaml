@@ -6,7 +6,7 @@ steps:
   - '-c'
   - |
     pip install requests
-    ls /etc
+    echo $TZ
     export TZ=Asia/Tokyo
     echo $TZ
     date
