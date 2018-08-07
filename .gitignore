@@ -100,11 +100,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-census_data
-data
-main
-utls
-
-# mypy
-.mypy_cache/
