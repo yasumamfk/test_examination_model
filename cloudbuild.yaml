@@ -6,10 +6,7 @@ steps:
   - '-c'
   - |
     pip install requests
-    LANG="ja_JP.UTF-8"
-    printenv
     date
-    echo v`date +"%Y%m%d_%H%M%S"` > tag
+    echo v`env LANG="ja_JP.UTF-8" date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
-    printenv
     echo $tag
