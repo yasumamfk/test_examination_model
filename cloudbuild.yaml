@@ -6,8 +6,8 @@ steps:
   - '-c'
   - |
     pip install requests
-    apk-get --update add tzdata
-    export TZ="Asia/Tokyo"
+    timedatectl set-timezone Asia/Tokyo
+    export TZ=Asia/Tokyo
     echo $TZ
     date
     echo v`date +"%Y%m%d_%H%M%S"` > tag
