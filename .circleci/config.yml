@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 ---
+=======
+>>>>>>> test
 defaults: &defaults
   working_directory: /src/github.com/mfkessai/examination_model
   docker:
@@ -6,8 +9,11 @@ defaults: &defaults
       environment:
         CLOUDSDK_COMPUTE_ZONE: asia-northeast1-a
         TZ: Asia/Tokyo
+<<<<<<< HEAD
 version: 2
 jobs:
+=======
+>>>>>>> test
   merge-preview:
     <<: *defaults
     steps:
@@ -21,4 +27,8 @@ workflows:
   version: 2
   deploy:
     jobs:
+<<<<<<< HEAD
       - merge-preview
+=======
+      - merge-preview
+>>>>>>> test

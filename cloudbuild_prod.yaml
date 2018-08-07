@@ -5,8 +5,8 @@ steps:
   args:
   - '-c'
   - |
-    tag=`gcloud beta ml-engine versions list --model $_MODEL_NAME --limit 1 --sort-by=~ | cut -d' ' -f1 | tail -n 1`
+    tag=`gcloud ml-engine versions list --model $_MODEL_NAME --limit 1 --sort-by=~ | cut -d' ' -f1 | tail -n 1`
     gcloud ml-engine versions set-default ${tag} --model=$_MODEL_NAME
 
 substitutions:
-    _MODEL_NAME: examination
+    _MODEL_NAME: transaction_examination
