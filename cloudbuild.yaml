@@ -6,7 +6,7 @@ steps:
   - '-c'
   - |
     pip install requests
-    apk --update add tzdata
+    apk-get --update add tzdata
     export TZ="Asia/Tokyo"
     echo $TZ
     date
