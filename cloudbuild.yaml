@@ -29,7 +29,7 @@ steps:
   - |
     tag=`cat tag`
     source=gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/${tag}
-    gcloud beta ml-engine versions create ${tag} \
+    gcloud ml-engine versions create ${tag} \
       --model $_MODEL_NAME \
       --origin ${source} \
       --runtime-version 1.8 \
