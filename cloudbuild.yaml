@@ -2,6 +2,7 @@ steps:
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
   id: 'push_tag'
+  env: 'TZ=Asia/Tokyo'
   args:
   - '-c'
   - |
@@ -10,5 +11,3 @@ steps:
     echo v`date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
     echo $tag
-  env:
-    TZ=Asia/Tokyo
