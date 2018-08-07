@@ -5,10 +5,8 @@ steps:
   args:
   - '-c'
   - |
-    git fetch --depth=1
-    git describe --tags --always > tag
-    tag=`cat tag`
+    tag=`gcloud ml-engine versions list --model $_MODEL_NAME --limit 1 --sort-by=~ | cut -d' ' -f1 | tail -n 1`
     gcloud ml-engine versions set-default ${tag} --model=$_MODEL_NAME
 
 substitutions:
-    _MODEL_NAME: examination
+    _MODEL_NAME: transaction_examination
