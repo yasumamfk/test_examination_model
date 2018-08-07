@@ -2,7 +2,8 @@ steps:
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
   id: 'push_tag'
-  env: 'TZ=Asia/Tokyo'
+  env:
+    - 'TZ=Asia/Tokyo'
   args:
   - '-c'
   - |
