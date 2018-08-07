@@ -6,10 +6,9 @@ steps:
   - '-c'
   - |
     pip install requests
-    echo $TZ
-    export TZ=Asia/Tokyo
-    echo $TZ
     date
     echo v`date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
     echo $tag
+  env:
+    TZ=Asia/Tokyo
