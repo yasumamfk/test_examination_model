@@ -9,4 +9,4 @@ steps:
     gcloud ml-engine versions set-default ${tag} --model=$_MODEL_NAME
 
 substitutions:
-    _MODEL_NAME: examination
+    _MODEL_NAME: transaction_examination
