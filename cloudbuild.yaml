@@ -3,11 +3,11 @@ steps:
   entrypoint: 'bash'
   id: 'push_tag'
   env:
-    - 'TZ=Asia/Tokyo'
+    - 'TZ="UTC-9"'
   args:
   - '-c'
   - |
     pip install requests
-    echo v`env  TZ="UTC-9" date +"%Y%m%d_%H%M%S"` > tag
+    echo v`date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
     echo $tag
