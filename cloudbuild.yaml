@@ -6,9 +6,9 @@ steps:
   - '-c'
   - |
     pip install requests
+    ls /etc
     export TZ=Asia/Tokyo
     echo $TZ
-    cat /etc/timezone
     date
     echo v`date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
