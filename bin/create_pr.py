@@ -3,18 +3,16 @@
 
 import sys
 import requests
+import json
 
 
-def create_pr_to_master(github_access_token):
+def create_pr_to_master(owner, repo, github_access_token):
     body = "## チェックリスト\n"
-    # owner = 'mfkessai'
-    owner = 'yasumamfk'
-    repo = 'test_examination_model'
-    branch_from = 'test-preview'
+    branch_from = 'yasumamfk:test-preview'
     branch_to = 'test-master'
-    url = 'https://api.github.com/repos/{owner}/{repo}/pulls?access_token={token}'.format(owner,
-                                                                                          repo,
-                                                                                          github_access_token)
+    url = 'https://api.github.com/repos/{}/{}/pulls?access_token={}'.format(owner,
+                                                                            repo,
+                                                                            github_access_token)
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'MFK-BOT'
@@ -27,12 +25,19 @@ def create_pr_to_master(github_access_token):
         'base': branch_to
     }
 
-    res = requests.post(url, headers, json=payload)
-    print(res.content)
+    res = requests.post(url, data=json.dumps(payload), headers=headers)
+    body = res.json()
+
+    print(
+        body['id'],
+        body['number'],
+        body['state'],
+        body['title'],
+        body['body'],
+    )
 
 
 if __name__ == '__main__':
-    # get file name from arg
     argvs = sys.argv
-    token = argvs[2]
-    create_pr_to_master(token)
+    github_access_token = argvs[1]
+    create_pr_to_master(github_access_token)
