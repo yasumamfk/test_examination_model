@@ -13,11 +13,10 @@ import json
 argvs = sys.argv
 argc = len(argvs)
 
-#mfkessai
-user = 'mfkessai'
-repo = 'examination_model'
-branch = 'preview'
-host = 'api.github.com'
+
+user = 'yasumamfk'
+repo = 'test_examination_model'
+branch = 'test'
 token = argvs[2]
 
 headers = {
@@ -30,11 +29,11 @@ headers = {
 # create new release
 def create_release(tag_version):
     print('create_release and tag')
-    path = 'https://' + host + '/repos/%s/%s/releases' % (user, repo)
+    path = 'https://api.github.com/repos/%s/%s/releases' % (user, repo)
     params = {
         'tag_name': '%s' % tag_version,
         'target_commitish': branch,
-        'name': 'v%s' % tag_version,
+        'name': '%s' % tag_version,
         'prerelease': False
     }
     resp = requests.post(path, data=json.dumps(params), headers=headers)
