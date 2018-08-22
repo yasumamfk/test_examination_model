@@ -5,6 +5,7 @@ steps:
   args:
   - '-c'
   - |
+    echo v`env  TZ="UTC-9" date +"%Y%m%d_%H%M%S"` > tag
     tag=`cat tag`
     source=gs://$PROJECT_ID-$_BUCKET/$REPO_NAME/${tag}
     gsutil cp ./$_MODEL_OBJ ${source}/$_MODEL_OBJ
