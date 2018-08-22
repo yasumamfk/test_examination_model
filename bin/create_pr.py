@@ -5,9 +5,33 @@ import sys
 import requests
 import json
 
+domain = 'https://api.github.com'
 
-def create_pr_to_master(owner, repo, github_access_token):
+# owner = 'mfkessai'
+owner = 'yasumamfk'
+repo = 'test_examination_model'
+branch_from = 'yasumamfk:test-preview'
+branch_to = 'test-master'
+
+
+def get_target_pr():
+    url = domain + '/repos/{}/{}/pulls'.format(owner, repo)
+    params = {
+        'sort': 'updated'
+
+    }
+    res = requests.get(url, params=params)
+    print(res.content)
+    print(res.json())
+    print(res.json()['head']['sha'])
+
+
+
+def create_pr_to_master(owner, github_access_token):
     body = "## チェックリスト\n"
+    # owner = 'mfkessai'
+    owner = 'yasumamfk'
+    repo = 'test_examination_model'
     branch_from = 'yasumamfk:test-preview'
     branch_to = 'test-master'
     url = 'https://api.github.com/repos/{}/{}/pulls?access_token={}'.format(owner,

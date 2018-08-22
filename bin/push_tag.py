@@ -4,7 +4,6 @@
 # githubのmasterブランチにマージされた後で実行され、Githubのreleaseとtagを作成
 # githubのrelease versionと、tag名は引数に渡された値を使用
 
-import os
 import sys
 import requests
 import json

@@ -1,16 +1,4 @@
 steps:
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bash'
-  id: 'push_tag'
-  args:
-  - '-c'
-  - |
-    pip install requests
-    echo v`env  TZ="UTC-9" date +"%Y%m%d_%H%M%S"` > tag
-    tag=`cat tag`
-    python bin/push_tag.py ${tag} $_GITHUB_API_TOKEN
-
-
 - name: gcr.io/cloud-builders/gsutil
   entrypoint: 'bash'
   id: 'put_model'
@@ -32,11 +20,11 @@ steps:
     gcloud ml-engine versions create ${tag} \
       --model $_MODEL_NAME \
       --origin ${source} \
-      --runtime-version 1.8 \
+      --runtime-version 1.9 \
       --framework SCIKIT_LEARN \
       --python-version 3.5
 
 substitutions:
     _MODEL_OBJ: model.pkl
     _MODEL_NAME: transaction_examination_v1
-    _BUCKET: data-forward-model
+    _BUCKET: mfk-dev-data-forward-model
