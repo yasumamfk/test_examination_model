@@ -28,4 +28,4 @@ steps:
 substitutions:
     _MODEL_OBJ: model.pkl
     _MODEL_NAME: transaction_examination_v1
-    _BUCKET: mfk-dev-data-forward-model
+    _BUCKET: data-forward-model
